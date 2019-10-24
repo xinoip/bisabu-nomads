@@ -8,20 +8,21 @@ Grid::Grid()
     }
 }
 
+int Grid::rootOf(int i)
+{
+    while (i != id[i])
+        i = id[i];
+    return i;
+}
+
 void Grid::unionPair(int p, int q)
 {
-    int pid = id[p];
-    int qid = id[q];
-    for (int i = 0; i < SIZE; i++)
-    {
-        if (id[i] == pid)
-        {
-            id[i] = qid;
-        }
-    }
+    int i = rootOf(p);
+    int j = rootOf(q);
+    id[i] = j;
 }
 
 bool Grid::isConnected(int p, int q)
 {
-    return (id[p] == id[q]);
+    return (rootOf(p) == rootOf(q));
 }
