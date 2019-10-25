@@ -8,18 +8,22 @@ Grid::Grid()
     }
 }
 
-bool Grid::isConnected(int p, int q) const
+bool Grid::isConnected(int p, int q)
 {
-    return (id[p] == id[q]);
+    return (rootOf(p) == rootOf(q));
 }
 
 void Grid::connectPair(int p, int q)
 {
-    int pValue = id[p];
-    int qValue = id[q]; 
-    for (int i = 0; i < N; i++)
-    {
-        if (id[i] == pValue) 
-            id[i] = qValue;
+    int pRoot = rootOf(p);
+    int qRoot = rootOf(q);
+    id[pRoot] = qRoot;
+}
+
+int Grid::rootOf(int i)
+{
+    while(i != id[i]) {
+        i = id[i];
     }
+    return i;
 }

@@ -5,8 +5,9 @@ class Grid
 {
 public:
     Grid();
-    bool isConnected(int p, int q) const;
+    bool isConnected(int p, int q);
     void connectPair(int p, int q);
+    int rootOf(int i);
 
 private:
     const static int N = 23;
