@@ -12,6 +12,7 @@ public:
 private:
     const static int N = 23;
     int id[N];
+    int weight[N];
 };
 
 #endif
