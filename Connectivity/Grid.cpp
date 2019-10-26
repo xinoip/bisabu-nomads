@@ -38,6 +38,10 @@ int Grid::rootOf(int i)
 {
     while (i != id[i])
     {
+        // PATH COMPRESSION
+        // LAST IMPROVEMENT
+        id[i] = id[id[i]];
+        // LAST IMPROVEMENT
         i = id[i];
     }
     return i;
