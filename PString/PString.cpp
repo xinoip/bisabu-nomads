@@ -59,6 +59,29 @@ int PString::indexOf(char c) const
     return -1;
 }
 
+PString PString::subString(unsigned first)
+{
+    
+}
+
+PString PString::subString(unsigned first, unsigned last)
+{
+    if ((first >= last) || last > size)
+        throw 1;
+    
+    PString rtr;
+    
+    rtr.size = last - first - 1;
+    char *newData = new char[rtr.size];
+
+    for (unsigned i = first, j = 0; i < last; i++, j++)
+    {
+        newData[j] = data[i];
+    }
+    rtr.data = newData;
+    return rtr;
+}
+
 void PString::toUpperCase() {}
 void PString::toUpperCase(unsigned first) {}
 void PString::toUpperCase(unsigned first, unsigned last)

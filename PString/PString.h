@@ -15,6 +15,9 @@ public:
     size_t length() const;
     int indexOf(char c) const;
 
+    PString subString(unsigned first);
+    PString subString(unsigned first, unsigned last);
+
     void toUpperCase();
     void toUpperCase(unsigned first);
     void toUpperCase(unsigned first, unsigned last);

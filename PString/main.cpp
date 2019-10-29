@@ -35,6 +35,9 @@ int main()
   myString += " king";
   std::cout << myString << std::endl;
 
+  PString subStrDemo = myString.subString(0, 4);
+  std::cout << "Substr(0,4): " << subStrDemo << std::endl;
+
   PString inputMe;
   std::cin >> inputMe;
   std::cout << inputMe << std::endl;
