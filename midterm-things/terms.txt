@@ -1,0 +1,17 @@
+encapsulation?
+
+hiding information and restricting direct access to information
+-----
+
+why static methods cannot access
+non static members?
+
+static memberlar classla ilgili memberlardir, static olmayanlar classla ilgili degil olusturulan instance ile ilgili memberlardir. eger static methodlar static olmayan memberlara erisebilseydi, hangi instancein memberina eriseceklerini bilemezlerdi. 
+-----
+
+conversion constructor?
+
+operasyon yapilirken compilerin otomatik conversion yapmak icin kullandigi constructor. double * int yaparken compiler nasil int i double yapiyorsa, money * int yaparken de compiler int money classinin tek parametreli constructorina gonderip, inti money e cevirmeye calisir.
+
+---
+big three, destructor - copy constructor - copy assignment, bunlardan 1 veya daha fazlasını overloadlarsanız hepsini overloadlamalısınız. Sebebi destructor spesifik olarak sileceklerinizi belirtiyor eğer copy constructor yazmazsanız compiler her şeyi copyler haberiniz olmayan şeyler için destructor çağırır vs
