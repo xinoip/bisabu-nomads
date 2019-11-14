@@ -6,3 +6,4 @@
 * voidPtrPrinting.c: print any array with any type
 * getuVector.cpp: basic vector impl
 * vectorPushAndConstruct.cpp: Vector pushback and constructor behaviour
+* stack.cpp: Basic stack with = and += operator overloads.

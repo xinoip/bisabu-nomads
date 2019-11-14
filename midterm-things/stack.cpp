@@ -10,6 +10,11 @@ public:
         top = nullptr;
     }
 
+    Stack(Stack &s)
+    {
+        push(s);
+    }
+
     ~Stack()
     {
         while (top != nullptr)
@@ -18,35 +23,16 @@ public:
         }
     }
 
-    void operator=(Stack &s)
+    Stack &operator=(Stack &s)
     {
-        
-
-        while (top != nullptr)
-        {
-            pop();
-        }
-
-        *this += s;
-
+        this->~Stack();
+        new (this) Stack(s);
+        return *this;
     }
 
     void operator+=(Stack &s)
     {
-        Stack temp;
-
-        while (s.top != nullptr)
-        {
-            temp.push(s.pop());
-        }
-
-        while (temp.top != nullptr)
-        {                         //I was going to just do top = s.top but then we have
-            int val = temp.pop(); //the same pointers so while destroying assigned stacks we free more
-            push(val);            //than once.
-            s.push(val);
-        }
-
+        push(s);
     }
 
     void push(const int val)
@@ -57,6 +43,7 @@ public:
         temp->next = top;
         top = temp;
     }
+
 
     const int pop()
     {
@@ -98,6 +85,24 @@ public:
     }
 
 private:
+    
+    void push(Stack &s)
+    {
+        Stack temp;
+
+        while (s.top != nullptr)
+        {
+            temp.push(s.pop());
+        }
+
+        while (temp.top != nullptr)
+        {                         //I was going to just do top = s.top but then we have
+            int val = temp.pop(); //the same pointers so while destroying assigned stacks we free more
+            push(val);            //than once.
+            s.push(val);
+        }
+    }
+
     struct Node
     {
         int data;
