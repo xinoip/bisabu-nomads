@@ -7,3 +7,4 @@
 * getuVector.cpp: basic vector impl
 * vectorPushAndConstruct.cpp: Vector pushback and constructor behaviour
 * stack.cpp: Basic stack with = and += operator overloads.
+* constToFinal.cpp: initing const variables with member initializer 
