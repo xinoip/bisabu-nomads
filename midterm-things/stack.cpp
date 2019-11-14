@@ -12,12 +12,6 @@ public:
 
     Stack(Stack &s)
     {
-
-        while (top != nullptr)
-        {
-            pop();
-        }
-
         push(s);
     }
 
@@ -50,22 +44,6 @@ public:
         top = temp;
     }
 
-    void push(Stack &s)
-    {
-        Stack temp;
-
-        while (s.top != nullptr)
-        {
-            temp.push(s.pop());
-        }
-
-        while (temp.top != nullptr)
-        {                         //I was going to just do top = s.top but then we have
-            int val = temp.pop(); //the same pointers so while destroying assigned stacks we free more
-            push(val);            //than once.
-            s.push(val);
-        }
-    }
 
     const int pop()
     {
@@ -107,6 +85,24 @@ public:
     }
 
 private:
+    
+    void push(Stack &s)
+    {
+        Stack temp;
+
+        while (s.top != nullptr)
+        {
+            temp.push(s.pop());
+        }
+
+        while (temp.top != nullptr)
+        {                         //I was going to just do top = s.top but then we have
+            int val = temp.pop(); //the same pointers so while destroying assigned stacks we free more
+            push(val);            //than once.
+            s.push(val);
+        }
+    }
+
     struct Node
     {
         int data;
