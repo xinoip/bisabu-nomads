@@ -10,6 +10,17 @@ public:
         top = nullptr;
     }
 
+    Stack(Stack &s)
+    {
+
+        while (top != nullptr)
+        {
+            pop();
+        }
+
+        push(s);
+    }
+
     ~Stack()
     {
         while (top != nullptr)
@@ -18,20 +29,28 @@ public:
         }
     }
 
-    void operator=(Stack &s)
+    Stack &operator=(Stack &s)
     {
-        
-
-        while (top != nullptr)
-        {
-            pop();
-        }
-
-        *this += s;
-
+        this->~Stack();
+        new (this) Stack(s);
+        return *this;
     }
 
     void operator+=(Stack &s)
+    {
+        push(s);
+    }
+
+    void push(const int val)
+    {
+        Node *temp = new Node;
+
+        temp->data = val;
+        temp->next = top;
+        top = temp;
+    }
+
+    void push(Stack &s)
     {
         Stack temp;
 
@@ -46,16 +65,6 @@ public:
             push(val);            //than once.
             s.push(val);
         }
-
-    }
-
-    void push(const int val)
-    {
-        Node *temp = new Node;
-
-        temp->data = val;
-        temp->next = top;
-        top = temp;
     }
 
     const int pop()
