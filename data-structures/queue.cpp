@@ -35,13 +35,13 @@ public:
         }
     }
 
-    Queue(Queue &q)
+    Queue(const Queue &q)
     {
         new (this) Queue;
         this->enqueue(q);
     }
 
-    bool enqueue(T data)
+    const bool enqueue(const T data)
     {
 
         ++size;
@@ -77,62 +77,51 @@ public:
         return retData;
     }
 
-    bool enqueue(Queue &q)
+    const bool enqueue(const Queue &q)
     {
-        Queue temp;
-        T tempdata;
-        while (q.head != nullptr)
-        {
-            temp.enqueue(q.dequeue());
+        Node* temp = q.head;
+        while(temp != nullptr){
+            enqueue(temp->data);
+            temp = temp->next;
         }
-        while (temp.head != nullptr)
-        {
-            tempdata = temp.dequeue();
-            enqueue(tempdata);
-            q.enqueue(tempdata);
-        }
+
     }
 
-    const Queue &operator=(Queue &other)
+    Queue &operator=(const Queue &other)
     {
         this->~Queue();
         new (this) Queue(other);
         return *this;
     }
 
-    Queue &operator+(Queue &other)
+    const Queue operator+(const Queue &other)
     {
-        Queue *temp = new Queue;
-        temp->enqueue(*this);
-        temp->enqueue(other);
-        return *temp;
+        Queue temp(*this);
+        temp.enqueue(other);
+        return temp;
     }
 
-    const Queue &operator+=(Queue &other)
+    Queue &operator+=(const Queue &other) // a = b += c linkable.
     {
         *this = *this + other;
         return *this;
     }
 
-    T peek()
+    const T peek() const
     {
         return head->data;
     }
 
-    void print()
+    void print() const
     {
-        Queue temp;
+        Node* cursor = head;
 
-        while (head != nullptr)
+        while (cursor != nullptr)
         {
-            cout << peek() << endl;
-            temp.enqueue(dequeue());
+            cout << cursor->data << endl;
+            cursor = cursor->next;
         }
 
-        while (temp.head != nullptr)
-        {
-            enqueue(temp.dequeue());
-        }
     }
 
     const bool isEmpty() const
