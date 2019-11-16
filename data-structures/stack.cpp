@@ -7,13 +7,14 @@ template <typename T>
 class Stack
 {
 public:
-    Stack()
+    Stack() : size_(0)
     {
         top = nullptr;
     }
 
-    Stack(Stack &s)
+    Stack(const Stack &s)
     {
+        new (this) Stack;
         push(s);
     }
 
@@ -25,16 +26,23 @@ public:
         }
     }
 
-    Stack &operator=(Stack &s)
+    Stack &operator=(const Stack &s) // s1 = s2 = s3 linkable
     {
         this->~Stack();
         new (this) Stack(s);
         return *this;
     }
 
-    void operator+=(Stack &s)
+    Stack& operator+=(const Stack &s) // s1 = s2 += s3 linkable
     {
         push(s);
+        return *this;
+    }
+
+    Stack operator+(const Stack &s){ // s1 + s2 + s3 linkable
+        Stack temp(*this);
+        temp.push(s);
+        return temp;
     }
 
     void push(const T val)
@@ -44,6 +52,19 @@ public:
         temp->data = val;
         temp->next = top;
         top = temp;
+
+        ++size_;
+    }
+
+        
+    void push(const Stack &s)
+    {
+        Node* cursor = s.top;
+
+        while(cursor != nullptr){
+            push(cursor->data);
+            cursor = cursor->next;
+        }
     }
 
 
@@ -58,52 +79,29 @@ public:
             delete temp;
             temp = nullptr;
 
+            --size_;
+
             return val;
         }
     }
 
     const int size() const //Kinda anticlimatic but whatever.
     {
-        Node *temp = top;
-        int count = 0;
-        while (temp != nullptr)
-        {
-            temp = temp->next;
-            ++count;
-        }
-        return count;
+        return size_;
     }
 
-    void print()
+    void print() const
     {
-        T temp;
-        if (top != nullptr)
-        {
-            temp = pop();
-            print();
-            cout << temp << endl;
-            push(temp);
+        Node* cursor = top;
+
+        while(cursor != nullptr){
+            cout << cursor->data << endl;
+            cursor = cursor->next;
         }
     }
 
 private:
-    
-    void push(Stack &s)
-    {
-        Stack temp;
 
-        while (s.top != nullptr)
-        {
-            temp.push(s.pop());
-        }
-
-        while (temp.top != nullptr)
-        {                         //I was going to just do top = s.top but then we have
-            T val = temp.pop(); //the same pointers so while destroying assigned stacks we free more
-            push(val);            //than once.
-            s.push(val);
-        }
-    }
 
     struct Node
     {
@@ -112,12 +110,13 @@ private:
     };
 
     Node *top;
+    int size_;
 };
 
 int main()
 {
     Stack<int> s1;
-    Stack<double> s2;
+    Stack<int> s2;
     Stack<int> s3;
 
     for (int i = 0; i < 10; ++i)
@@ -127,7 +126,7 @@ int main()
 
     s1.print();
 
-    for (double i = 15; i < 20; i += 0.5)
+    for (int i = 15; i < 20; ++i)
         s2.push(i);
 
     for(int i =50;i<70;++i)
@@ -135,7 +134,7 @@ int main()
 
     s2.print();
 
-    s1 += s3;
+    s1 = s1 + s2 + s3;
 
     s1.print();
 

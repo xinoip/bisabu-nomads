@@ -94,7 +94,7 @@ public:
         return *this;
     }
 
-    const Queue operator+(const Queue &other)
+    Queue operator+(const Queue &other) // q1 + q2 + q3 linkable
     {
         Queue temp(*this);
         temp.enqueue(other);
@@ -159,7 +159,7 @@ int main()
     q2.enqueue(8);
 
     q1 += q2;
-    q3 = q1 + q2;
+    q3 = q1 + q2 + q3;
     cout << q1 << '\n'
          << q2 << '\n'
          << q3 << endl;
