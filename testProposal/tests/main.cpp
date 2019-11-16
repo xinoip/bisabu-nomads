@@ -30,7 +30,7 @@ int main()
         std::cout << "Failed " << TEST_COUNT - passedTests << " tests." << std::endl;
     }
 
-    std::cout << std::endl;
+    std::cout << "\n" << std::endl;
 
     return 0;
 }
